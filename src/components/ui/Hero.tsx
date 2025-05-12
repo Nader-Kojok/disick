@@ -16,6 +16,17 @@ const Hero: React.FC = () => {
         loop
         muted
         playsInline
+        preload="auto"
+        poster="/hero_poster.jpg"
+        onError={(e) => {
+          const video = e.target as HTMLVideoElement;
+          video.play().catch(() => {
+            // If autoplay fails, try playing on user interaction
+            document.addEventListener('touchstart', () => {
+              video.play().catch(() => {});
+            }, { once: true });
+          });
+        }}
         aria-label="Background video showing gym activities"
       />
       {/* Overlay */}
